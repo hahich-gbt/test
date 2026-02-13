@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Валентинка 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffd6e8, #ffeef5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    background: linear-gradient(145deg, #ffffff, #ffeef5);
+    width: 90%;
+    max-width: 360px;
+    padding: 30px 20px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  h1 {
+    color: #e63946;
+    margin-bottom: 15px;
+  }
+
+  img {
+    width: 160px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    position: relative;
+    height: 80px;
+  }
+
+  button {
+    font-size: 1.1em;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    position: absolute;
+    transition: transform 0.3s ease;
+  }
+
+  #yes {
+    background: linear-gradient(45deg, #4caf50, #81c784);
+    color: white;
+    transform: scale(0.5);
+    left: 50%;
+    transform-origin: center;
+  }
+
+  #no {
+    background: linear-gradient(45deg, #e63946, #f28fa6);
+    color: white;
+    left: 0;
+    top: 0;
+  }
+
+  /* ПЫЛЬ */
+  .particle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: #e63946;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: dust 1.2s forwards;
+  }
+
+  @keyframes dust {
+    to {
+      transform: translate(var(--x), var(--y)) scale(0);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Ты будешь моей валентинкой? 💕</h1>
+  <img src="main/cat1.jpg">
+  <div class="buttons">
+    <button id="yes">Да 💖</button>
+    <button id="no">Нет 🙈</button>
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+
+  let yesSize = 0.5;
+  yesBtn.style.transform = `scale(${yesSize})`;
+
+  // Кнопка "Нет" убегает
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * 200;
+    const y = Math.random() * 60;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+    yesSize += 0.08;
+    yesBtn.style.transform = `scale(${yesSize})`;
+  });
+
+  // КНОПКА "НЕТ" ИСЧЕЗАЕТ В ПЫЛИ
+  noBtn.addEventListener("click", () => {
+    const rect = noBtn.getBoundingClientRect();
+
+    noBtn.style.opacity = 0;
+
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = rect.left + rect.width / 2 + "px";
+      p.style.top = rect.top + rect.height / 2 + "px";
+      p.style.setProperty("--x", (Math.random() - 0.5) * 200 + "px");
+      p.style.setProperty("--y", (Math.random() - 0.5) * 200 + "px");
+      document.body.appendChild(p);
+
+      setTimeout(() => p.remove(), 1200);
+    }
+
+    setTimeout(() => noBtn.remove(), 300);
+  });
+
+  // Кнопка "Да"
+  yesBtn.addEventListener("click", () => {
+    document.querySelector(".card").innerHTML = `
+      <h1>Урааа! 😻💘</h1>
+      <img src="main/cat.jpg">
+      <p style="font-size:1.2em;">Теперь ты моя валентинка 💖</p>
+    `;
+  });
+</script>
+
+</body>
+</html>
