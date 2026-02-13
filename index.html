@@ -2,194 +2,226 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Валентинка</title>
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ffd6e8, #ffeef5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-  }
+* { box-sizing: border-box; }
 
-  .card {
-    background: linear-gradient(145deg, #ffffff, #ffeef5);
-    width: 90%;
-    max-width: 360px;
-    padding: 30px 20px;
-    border-radius: 25px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    position: relative;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #ffe6f0, #ffb3d9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+}
 
-  h1 {
-    color: #e63946;
-    margin-bottom: 15px;
-  }
+/* ФОН С СЕРДЦАМИ */
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: float 8s linear infinite;
+  opacity: 0.6;
+}
+@keyframes float {
+  from { transform: translateY(110vh) scale(0.8); }
+  to { transform: translateY(-10vh) scale(1.2); }
+}
 
-  img {
-    width: 180px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
-  }
+/* КАРТОЧКА */
+.card {
+  background: linear-gradient(145deg, #ffffff, #ffeef7);
+  width: 90%;
+  max-width: 380px;
+  padding: 35px 25px;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+  animation: appear 1s ease;
+  position: relative;
+  z-index: 2;
+}
 
-  .jump {
-    transform: scale(1.1) translateY(-6px);
-  }
+@keyframes appear {
+  from { opacity: 0; transform: scale(0.8) translateY(40px); }
+  to { opacity: 1; transform: scale(1); }
+}
 
-  .buttons {
-    position: relative;
-    height: 80px;
-  }
+h1 {
+  color: #e63946;
+  margin-bottom: 15px;
+}
 
-  button {
-    font-size: 1.1em;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    position: absolute;
-    transition: transform 0.3s ease;
-  }
+img {
+  width: 190px;
+  border-radius: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
 
-  #yes {
-    background: linear-gradient(45deg, #4caf50, #81c784);
-    color: white;
-    transform: scale(0.5);
-    left: 50%;
-    transform-origin: center;
-  }
+/* КНОПКИ */
+.buttons {
+  position: relative;
+  height: 90px;
+}
 
-  #no {
-    background: linear-gradient(45deg, #e63946, #f28fa6);
-    color: white;
-    left: 0;
-    top: 0;
-  }
+button {
+  font-size: 1.15em;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  position: absolute;
+  transition: transform 0.3s ease;
+}
 
-  /* ПЫЛЬ */
-  .particle {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    background: #e63946;
-    border-radius: 50%;
-    pointer-events: none;
-    animation: dust 1.2s forwards;
-  }
+#yes {
+  background: linear-gradient(45deg, #4caf50, #81c784);
+  color: white;
+  left: 50%;
+  transform: translateX(-50%) scale(0.5);
+}
 
-  @keyframes dust {
-    to {
-      transform: translate(var(--x), var(--y)) scale(0);
-      opacity: 0;
-    }
-  }
+#yes.pulse {
+  animation: pulse 1s infinite;
+}
 
-  /* КОНФЕТТИ */
-  .confetti {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: red;
-    animation: fall 1.5s linear forwards;
-  }
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+  100% { transform: translateX(-50%) scale(1); }
+}
 
-  @keyframes fall {
-    to {
-      transform: translateY(100vh) rotate(720deg);
-      opacity: 0;
-    }
+#no {
+  background: linear-gradient(45deg, #e63946, #ff8fab);
+  color: white;
+  left: 0;
+  top: 0;
+}
+
+/* ПЫЛЬ ТАНОСА */
+.particle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: dust 1.4s forwards;
+}
+
+@keyframes dust {
+  to {
+    transform: translate(var(--x), var(--y)) scale(0);
+    opacity: 0;
   }
+}
+
+/* КОНФЕТТИ */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  animation: fall 2s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="card" id="card">
   <h1>Ты будешь моей валентинкой? 💕</h1>
-
-  <img id="gif"
-    src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDRmZzAyOGR6MXlvaTRlcGpnODVxMmt2MWdtYzV5aWdjdTcyNm9qbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1JmGiBtqTuehfYxuy9/giphy.gif">
-
+  <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
   <div class="buttons">
     <button id="yes">Да 💖</button>
     <button id="no">Нет 🙈</button>
   </div>
 </div>
 
-<!-- ЗВУК -->
-<audio id="winSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+<audio id="sound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 
 <script>
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-  const gif = document.getElementById("gif");
-  const card = document.getElementById("card");
-  const sound = document.getElementById("winSound");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const card = document.getElementById("card");
+const sound = document.getElementById("sound");
 
-  let yesSize = 0.5;
-  yesBtn.style.transform = `scale(${yesSize})`;
+let yesSize = 0.5;
+yesBtn.style.transform = `translateX(-50%) scale(${yesSize})`;
 
-  // Нет убегает
-  noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * 200;
-    const y = Math.random() * 60;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+/* ФОН СЕРДЕЦ */
+for (let i = 0; i < 20; i++) {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.textContent = "💖";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.animationDuration = 6 + Math.random() * 6 + "s";
+  h.style.fontSize = 14 + Math.random() * 20 + "px";
+  document.body.appendChild(h);
+}
 
-    yesSize += 0.08;
-    yesBtn.style.transform = `scale(${yesSize})`;
+/* НЕТ УБЕГАЕТ */
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 220;
+  const y = Math.random() * 70;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-    gif.classList.add("jump");
-    setTimeout(() => gif.classList.remove("jump"), 200);
-  });
+  yesSize += 0.1;
+  yesBtn.style.transform = `translateX(-50%) scale(${yesSize})`;
 
-  // Нет исчезает
-  noBtn.addEventListener("click", () => {
-    const rect = noBtn.getBoundingClientRect();
-    noBtn.style.opacity = 0;
+  if (yesSize > 1) yesBtn.classList.add("pulse");
+});
 
-    for (let i = 0; i < 40; i++) {
-      const p = document.createElement("div");
-      p.className = "particle";
-      p.style.left = rect.left + rect.width / 2 + "px";
-      p.style.top = rect.top + rect.height / 2 + "px";
-      p.style.setProperty("--x", (Math.random() - 0.5) * 200 + "px");
-      p.style.setProperty("--y", (Math.random() - 0.5) * 200 + "px");
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 1200);
-    }
+/* ТАНОС */
+noBtn.addEventListener("click", () => {
+  const r = noBtn.getBoundingClientRect();
+  noBtn.style.opacity = 0;
 
-    setTimeout(() => noBtn.remove(), 300);
-  });
+  for (let i = 0; i < 50; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = r.left + r.width / 2 + "px";
+    p.style.top = r.top + r.height / 2 + "px";
+    p.style.setProperty("--x", (Math.random() - 0.5) * 300 + "px");
+    p.style.setProperty("--y", (Math.random() - 0.5) * 300 + "px");
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1400);
+  }
 
-  // Да 💖
-  yesBtn.addEventListener("click", () => {
-    navigator.vibrate?.(200);
-    sound.play();
+  setTimeout(() => noBtn.remove(), 300);
+});
 
-    // конфетти
-    for (let i = 0; i < 60; i++) {
-      const c = document.createElement("div");
-      c.className = "confetti";
-      c.style.left = Math.random() * 100 + "vw";
-      c.style.top = "-10px";
-      c.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 1500);
-    }
+/* ДА */
+yesBtn.addEventListener("click", () => {
+  navigator.vibrate?.(300);
+  sound.play();
 
-    card.innerHTML = `
-      <h1>Урааа! 😻💘</h1>
-      <img src="https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif">
-      <p style="font-size:1.2em;">Теперь ты моя валентинка 💖</p>
-    `;
-  });
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.top = "-10px";
+    c.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 2000);
+  }
+
+  card.innerHTML = `
+    <h1>💘 ЭТО ДА! 💘</h1>
+    <img src="https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif">
+    <p style="font-size:1.3em;">Теперь ты моя валентинка навсегда 💖</p>
+  `;
+});
 </script>
 
 </body>
