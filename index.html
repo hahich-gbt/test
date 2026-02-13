@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"
 <title>Валентинка 💖</title>
 
 <style>
@@ -34,9 +34,14 @@
   }
 
   img {
-    width: 160px;
+    width: 180px;
     border-radius: 15px;
     margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .jump {
+    transform: scale(1.1) translateY(-6px);
   }
 
   .buttons {
@@ -86,27 +91,52 @@
       opacity: 0;
     }
   }
+
+  /* КОНФЕТТИ */
+  .confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: red;
+    animation: fall 1.5s linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="card">
+<div class="card" id="card">
   <h1>Ты будешь моей валентинкой? 💕</h1>
-  <img src="main/cat1.jpg">
+
+  <img id="gif"
+    src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+
   <div class="buttons">
     <button id="yes">Да 💖</button>
     <button id="no">Нет 🙈</button>
   </div>
 </div>
 
+<!-- ЗВУК -->
+<audio id="winSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+
 <script>
   const noBtn = document.getElementById("no");
   const yesBtn = document.getElementById("yes");
+  const gif = document.getElementById("gif");
+  const card = document.getElementById("card");
+  const sound = document.getElementById("winSound");
 
   let yesSize = 0.5;
   yesBtn.style.transform = `scale(${yesSize})`;
 
-  // Кнопка "Нет" убегает
+  // Нет убегает
   noBtn.addEventListener("mouseover", () => {
     const x = Math.random() * 200;
     const y = Math.random() * 60;
@@ -114,12 +144,14 @@
 
     yesSize += 0.08;
     yesBtn.style.transform = `scale(${yesSize})`;
+
+    gif.classList.add("jump");
+    setTimeout(() => gif.classList.remove("jump"), 200);
   });
 
-  // КНОПКА "НЕТ" ИСЧЕЗАЕТ В ПЫЛИ
+  // Нет исчезает
   noBtn.addEventListener("click", () => {
     const rect = noBtn.getBoundingClientRect();
-
     noBtn.style.opacity = 0;
 
     for (let i = 0; i < 40; i++) {
@@ -130,18 +162,31 @@
       p.style.setProperty("--x", (Math.random() - 0.5) * 200 + "px");
       p.style.setProperty("--y", (Math.random() - 0.5) * 200 + "px");
       document.body.appendChild(p);
-
       setTimeout(() => p.remove(), 1200);
     }
 
     setTimeout(() => noBtn.remove(), 300);
   });
 
-  // Кнопка "Да"
+  // Да 💖
   yesBtn.addEventListener("click", () => {
-    document.querySelector(".card").innerHTML = `
+    navigator.vibrate?.(200);
+    sound.play();
+
+    // конфетти
+    for (let i = 0; i < 60; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.top = "-10px";
+      c.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 1500);
+    }
+
+    card.innerHTML = `
       <h1>Урааа! 😻💘</h1>
-      <img src="https://i.giphy.com/1JmGiBtqTuehfYxuy9.webp">
+      <img src="https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif">
       <p style="font-size:1.2em;">Теперь ты моя валентинка 💖</p>
     `;
   });
